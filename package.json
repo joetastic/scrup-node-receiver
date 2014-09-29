@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "underscore": "1.1.6",
-    "coffee-script": "1.1.1"
+    "coffee-script": "1.1.1",
+    "hashids": "~1.0.1"
   }
 }

@@ -1,5 +1,6 @@
 http = require 'http'
 _ = require 'underscore'
+Hashids = require 'hashids'
 
 class Receiver
   constructor: (args) ->
@@ -13,6 +14,8 @@ class Receiver
     @limit = args.limit || 2
     @logging = args.logging || false
     @images = {}
+    @hashids = new Hashids('here is my awesome salt')
+    @counter = 0
     @start()
 
   start: ->
@@ -25,7 +28,7 @@ class Receiver
 
     req.addListener 'data', (data) -> req.content += data
     req.addListener 'end', (data) =>
-      filename = new Date().getTime()
+      filename = @hashids.encode(@counter++)
       buf = new Buffer(req.content.length)
       buf.write(req.content, 0, 'binary')
       @images[filename] = buf
